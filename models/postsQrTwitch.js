@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const PostsModelQrTwitch = mongoose.model(
-    "twitch",
+    "qr",
     {
         author: {
             type: String,

@@ -42,8 +42,7 @@ const PostsModelP = mongoose.model(
         jrsArrosage:{
             type: Number,
             require: true
-        }
-        ,
+        },
         date: {
             type: Date,
             default: Date.now

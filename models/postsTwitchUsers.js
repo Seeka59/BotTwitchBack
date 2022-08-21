@@ -2,21 +2,29 @@ const mongoose = require('mongoose');
 const PostsModelTwitchUsers = mongoose.model(
     "twitch",
     {
+        channel: {
+            type: String,
+            required: true
+        },
+        serveur: {
+            type: String,
+            required: true
+        },
         author: {
             type: String,
-            require: true
+            required: true
         },
         nbrCo: {
             type: Number,
-            require: true
+            required: true
         },
         nbrMsg: {
             type: Number,
-            require: true
+            required: true
         },
         points: {
             type: Number,
-            require: true
+            required: true
         },
         date: {
             type: Date,

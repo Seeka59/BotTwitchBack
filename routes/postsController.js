@@ -4,6 +4,7 @@ const ObjectID =require('mongoose').Types.ObjectId;
 
 const {PostsModel} = require('../models/postsModel');
 const {PostsModelP} = require('../models/postsPlantesModels');
+const {PostsModelMeteo} = require('../models/postsMeteo');
 const {PostsModelTwitchUsers} = require('../models/postsTwitchUsers');
 const {PostsModelQrTwitch} = require('../models/postsQrTwitch');
 
@@ -124,6 +125,8 @@ router.get('/twitchUsers', (req,res) =>{
 
 router.post('/twitchUsers' , (req,res) => {
     const newModel = new PostsModelTwitchUsers({
+        channel: req.body.channel,
+        serveur: req.body.serveur,
         author: req.body.author,
         nbrCo: req.body.nbrCo,
         nbrMsg: req.body.nbrMsg,
@@ -135,11 +138,14 @@ router.post('/twitchUsers' , (req,res) => {
     })
 })
 
-router.put("twitch/:id",(req,res) => {
+router.put("/twitch/:id",(req,res) => {
 
     if(!ObjectID.isValid(req.params.id))
     return res.status(400).send("ID unknow :" + req.params.id);
+    
     const updateRecord ={
+        channel: req.body.channel,
+        serveur: req.body.serveur,
         author: req.body.author,
         nbrCo: req.body.nbrCo,
         nbrMsg: req.body.nbrMsg,
@@ -199,6 +205,31 @@ router.put("twitch/:id",(req,res) => {
     )
 });
 
+
+// Meteo Fetch // 
+
+router.get("/meteo",(req,res) => {
+    PostsModelMeteo.find((err,docs) => {
+        if(!err)res.send(docs)
+        else console.log('error creating new data' + err)
+    })
+})
+
+router.post('/meteo' , (req,res) => {
+    const newModel = new PostsModelMeteo({
+        author: req.body.author,
+        ville: req.body.ville,
+        temperature: req.body.temperature,
+        humiditer: req.body.humiditer,
+        pression: req.body.pression,
+        visibiliter: req.body.visibiliter,
+        vent: req.body.vent
+    });
+    newModel.save((err,docs) => {
+        if(!err)res.send(docs);
+        else console.log('Error creating new data' +err);
+    })
+})
 
 
 module.exports = router;
